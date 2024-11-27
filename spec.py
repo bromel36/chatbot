@@ -133,18 +133,11 @@ def extract_price_brand(text):
 
     return specs
 
-# # Example usage
-# texts = [
-#     "Tôi muốn mua một chiếc Dell XPS giá 25 triệu.",
-#     "Cần tìm laptop HP Spectre khoảng 30 triệu đồng",
-#     "Giá của Lenovo Thinkpad là 15,000,000 VNĐ",
-#     "Tôi đang quan tâm đến Macbook Pro",
-#     "tôi muốn mua laptop lenovo giá khoảng 15tr",
-#     "laptop asuz giá khoảng 25 tr",
-#     "laptop Acer 15 triệu",
-#     "máy delll khoảng 54 tr"
-# ]
-#
-# for text in texts:
-#     print(f"Text: {text}\nExtracted: {extract_price_brand(text)}\n")
+# Example usage
+texts = [
+    "tôi muốn mua máy dell khoảng 12 triệu"
+]
+
+for text in texts:
+    print(f"Text: {text}\nExtracted: {extract_price_brand(text)}\n")
 

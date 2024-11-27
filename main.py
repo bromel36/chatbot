@@ -15,10 +15,10 @@ import string
 import re
 from static.emo_unicode import UNICODE_EMOJI
 from spec import extract_price_brand
+from flask import jsonify
 
 url_pattern = re.compile(r'http\S+')
 emoji_pattern = re.compile('|'.join(UNICODE_EMOJI), flags=re.UNICODE)
-
 
 type = 'demand'
 type_spec = 'specification'
@@ -71,7 +71,7 @@ def bow(sentence, words, show_details=True):
     return (np.array(bag))
 
 
-def predict_class(sentence, model):
+def predict_class(sentence, model, words, classes):
     # filter out predictions below a threshold
     p = bow(sentence, words, show_details=False)
     res = model.predict(np.array([p]))[0]
@@ -97,15 +97,43 @@ def getResponse(ints, intents_json):
     return result
 
 
+def create_result(message, tag, brand, price):
+    response_json = {
+        "message": message,
+        "tag": tag,
+        "brand": brand,
+        "price": price
+    }
+    return response_json
+
+
 def chatbot_response(msg):
-    ints = predict_class(msg, model)
+    ints = predict_class(msg, model, words, classes)
 
-    ints_spec = predict_class(msg, modelSpec)
+    ints_spec = predict_class(msg, modelSpec, words_spec, classes_spec)
 
+    message = ""
+    tag = ""
+    brand = ""
+    price = ""
 
-    res = getResponse(ints, intents)
+    if ints:
+        tag = ints[0]['intent']
+        message = getResponse(ints, intents)
+        if tag in ['greeting', 'no-content']:
+            tag = ''
 
-    return res
+    if ints_spec:
+        spec_tag = ints_spec[0]['intent']
+        message = getResponse(ints_spec, intents_spec)
+        if spec_tag == 'find_laptop':
+            specs = extract_price_brand(msg)  # Lấy dictionary trả về từ hàm
+            brand = specs.get("brand", "")
+            price = specs.get("price", "")
+    else:
+        message = "Tôi không hiểu câu hỏi của bạn."
+
+    return create_result(message, tag, brand, price)
 
 
 from flask import Flask, render_template, request
@@ -119,8 +147,9 @@ app.static_folder = 'static'
 def get_bot_response():
     userText = request.args.get('msg')
 
+    res = chatbot_response(userText)
 
-    return chatbot_response(userText)
+    return jsonify(res)
 
 
 @app.route("/")
