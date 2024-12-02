@@ -15,6 +15,7 @@ import string
 import re
 from static.emo_unicode import UNICODE_EMOJI
 from spec import extract_price_brand
+from combination import process_input
 from flask import jsonify
 
 url_pattern = re.compile(r'http\S+')
@@ -28,18 +29,17 @@ model = load_model(os.path.abspath('model/' + type + '/model.keras'))
 modelSpec = load_model(os.path.abspath('model/' + type_spec + '/model.keras'))
 
 # intents = json.loads(open('data.json').read())
-intents = json.loads(open(os.path.abspath('data/data_demand.json'), encoding="utf8").read())
+intents = json.loads(open(os.path.abspath('data/demand.json'), encoding="utf8").read())
 words = pickle.load(open(os.path.abspath('model/' + type + '/texts.pkl'), 'rb'))
 classes = pickle.load(open(os.path.abspath('model/' + type + '/labels.pkl'), 'rb'))
 
-intents_spec = json.loads(open(os.path.abspath('data/data_specification.json'), encoding="utf8").read())
+intents_spec = json.loads(open(os.path.abspath('data/specification.json'), encoding="utf8").read())
 words_spec = pickle.load(open(os.path.abspath('model/' + type_spec + '/texts.pkl'), 'rb'))
 classes_spec = pickle.load(open(os.path.abspath('model/' + type_spec + '/labels.pkl'), 'rb'))
 
 
 
-with open(os.path.abspath('vietnamese-stopwords.txt'), 'r', encoding='utf-8') as file:
-    stop_words = set(word.strip() for word in file.readlines())
+
 
 def clean_up_sentence(sentence):
     # ignore special characters
@@ -52,8 +52,6 @@ def clean_up_sentence(sentence):
 
     # tokenize the pattern - split words into array
     sentence_words = nltk.word_tokenize(sentence_trans)
-
-    sentence_words = [word for word in sentence_words if word.lower() not in stop_words]
 
 
     # stem each word - create short form for word
@@ -131,7 +129,7 @@ def chatbot_response(msg):
     if ints:
         tag = ints[0]['intent']
         message = getResponse(ints, intents)
-        if tag in ['greeting', 'no-content']:
+        if tag in ['greeting', 'no-content', 'bye']:
             tag = ''
 
     if ints_spec:

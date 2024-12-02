@@ -10,7 +10,7 @@ if "ner" not in nlp.pipe_names:
     ner = nlp.add_pipe("ner")
 
 # Đọc dữ liệu huấn luyện
-with open("augmented_data.json", "r", encoding="utf-8") as f:
+with open("data\\ner.json", "r", encoding="utf-8") as f:
     training_data = json.load(f)["data"]
 
 # Gắn nhãn dữ liệu cho NER
@@ -28,10 +28,12 @@ for item in training_data:
     examples.append(Example.from_dict(doc, {"entities": entities}))
 
 # Huấn luyện mô hình với Early Stopping và lưu mô hình tốt nhất
+
+
 optimizer = nlp.begin_training()
 best_loss = float("inf")  # Khởi tạo loss tốt nhất
 no_improve_epochs = 0     # Số epoch không cải thiện liên tiếp
-patience = 4              # Ngưỡng kiên nhẫnd
+patience = 4              # Ngưỡng kiên nhẫn
 best_model_path = "brand_price_ner_model"
 
 for epoch in range(20):  # Train trong tối đa 20 epoch

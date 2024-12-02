@@ -5,6 +5,7 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import nltk
 from nltk.stem import WordNetLemmatizer
 import json
@@ -42,13 +43,14 @@ def data_process(rootPath, nameFile, type):
             if intent['tag'] not in classes:
                 classes.append(intent['tag'])
 
-    words = [lemmatizer.lemmatize(w.lower()) for w in words if w not in ignore_words]
+    words = [(w.lower()) for w in words if w not in ignore_words]
+
     words = sorted(list(set(words)))
     classes = sorted(list(set(classes)))
 
     print(len(documents), "documents")
     print(len(classes), "classes", classes)
-    print(len(words), "unique lemmatized words", words)
+    print(len(words), "unique words", words)
 
     save_path = os.path.join(rootPath, 'model', type)
     os.makedirs(save_path, exist_ok=True)
@@ -62,7 +64,7 @@ def data_process(rootPath, nameFile, type):
     for doc in documents:
         bag = []
         pattern_words = doc[0]
-        pattern_words = [lemmatizer.lemmatize(word.lower()) for word in pattern_words]
+        pattern_words = [word.lower() for word in pattern_words]
         for w in words:
             bag.append(1) if w in pattern_words else bag.append(0)
 
@@ -78,9 +80,9 @@ def data_process(rootPath, nameFile, type):
     return train_x, train_y
 
 
-rootPath = 'D:\\NguyenMinhTien_N21DCCN188_PTITHCM\\ImageProcessing\\trainingtest'
-type = 'demand'
-nameFile = 'data\\data_demand.json'
+rootPath = 'D:\\intelligent-system-analysis-design\\chatbot'
+type = 'specification'
+nameFile = 'data\\specification.json'
 train_x, train_y = data_process(rootPath, nameFile, type)
 
 
@@ -99,18 +101,8 @@ model.add(Dropout(0.5))
 model.add(Dense(len(train_y[0]), activation="softmax"))
 
 
-# Hàm callback để điều chỉnh learning rate
-def lr_schedule(epoch):
-    learning_rate = 0.01
-    if epoch > 10:
-        learning_rate *= 0.1
-    return learning_rate
-
-
 sgd = SGD(learning_rate=0.01, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
-
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 # Thêm callback Early Stopping
 early_stopping = EarlyStopping(
