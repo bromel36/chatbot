@@ -1,38 +1,9 @@
-# import spacy
-#
-# # Tải mô hình spaCy
-# nlp = spacy.load("en_core_web_sm")
-#
-# # Ví dụ câu để phân tích
-# sentence = "I want a laptop with 16GB RAM and 512GB storage"
-#
-# # Phân tích câu
-# doc = nlp(sentence)
-#
-# # Khởi tạo từ điển để lưu các thực thể nhận diện
-# entities = {}
-#
-# # Đối với mỗi thực thể nhận diện được
-# for ent in doc.ents:
-#     if ent.label_ == "ORG":  # Nhận diện thương hiệu (brand)
-#         entities["brand"] = ent.text
-#     elif ent.label_ == "CARDINAL":  # Nhận diện dung lượng RAM hoặc ROM
-#         if "RAM" in sentence:  # Nếu có từ 'RAM' trong câu, xác định là RAM
-#             entities["ram"] = ent.text + "GB"
-#         elif "storage" in sentence or "ROM" in sentence:  # Nếu có từ 'storage' hoặc 'ROM', xác định là ROM
-#             entities["storage"] = ent.text + "GB"
-#     elif ent.label_ == "PRODUCT":  # Nhận diện loại sử dụng (ví dụ: văn phòng)
-#         entities["usage_type"] = ent.text
-#
-# # Kết quả trả về
-# print(entities)
-
 import spacy
 import re
 
 # Load spaCy model
 try:
-    nlp = spacy.load("en_core_web_sm")  # Model cho tiếng Việt
+    nlp = spacy.load("en_core_web_sm")  
 except OSError:
     print("Downloading en_core_web_sm model...")
     spacy.cli.download("en_core_web_sm")
@@ -69,9 +40,7 @@ brand_synonyms = {
 }
 
 
-# Regex to match prices in Vietnamese
-# price_pattern = r"(\d+[\.,]?\d*\s*(triệu|tr|vnđ|vnd|đồng|đ)|\d{1,3}(\.\d{3})+( vnđ| vnd)?)"
-price_pattern = r"(\d{1,3}([.,]\d{3})*(\s*(triệu|tr|vnđ|vnd|đồng|đ)?)|\d+\s*(triệu|tr|vnđ|vnd|đồng|đ))"
+price_pattern = r"\b\d{1,3}([.,]\d{3})*(\s*(triệu|tr|vnđ|vnd|đồng|đ|m|millions)?)\b|\b\d+\s*(triệu|tr|vnđ|vnd|đồng|đ|m|million)\b"
 
 
 def normalize_text(text):
@@ -82,62 +51,101 @@ def extract_brand(text, doc):
     """
     Nhận diện thương hiệu từ văn bản bằng spaCy và kiểm tra qua từ điển.
     """
+    brands = []
     # Duyệt qua các thực thể do spaCy nhận diện
     for ent in doc.ents:
         if ent.label_ == "ORG":  # Kiểm tra thực thể là tổ chức
             candidate = ent.text.lower()
             for brand, synonyms in brand_synonyms.items():
                 if candidate in synonyms:  # Đối chiếu với từ điển
-                    return brand
-    # Nếu không tìm thấy qua thực thể, kiểm tra thủ công qua từ điển
+                    brands.append(brand)
+
+        # Nếu không tìm thấy qua thực thể, kiểm tra thủ công qua từ điển
     for brand, synonyms in brand_synonyms.items():
         if any(synonym in text for synonym in synonyms):
-            return brand
-    return None
+            brands.append(brand)
+    return brands
+
+
+# def extract_price(text):
+#     """
+#     Nhận diện giá tiền từ văn bản và trả về một giá trị duy nhất.
+#     """
+
+#     price_pattern = r"\b\d{1,3}([.,]\d{3})*(\s*(triệu|tr|vnđ|vnd|đồng|đ|m|millions)?)\b|\b\d+\s*(triệu|tr|vnđ|vnd|đồng|đ|m|million)\b"
+
+
+#     # Sử dụng regex để tìm tất cả các số có thể là giá
+#     matches = re.finditer(price_pattern, text.lower())
+
+#     # Nếu có ít nhất một kết quả khớp, lấy kết quả đầu tiên
+#     for match in matches:
+#         price_str = match.group(0)
+#         # Xử lý giá trị nếu chứa đơn vị tiền tệ
+#         if any(unit in price_str for unit in ["triệu", "tr", "vnđ", "vnd", "đồng", "đ", "m", "millions"]):
+#             price_str = re.sub(r"[^\d,]", "", price_str)
+#             price_value = float(price_str.replace(",", ".")) * 1_000_000  # Quy đổi sang đồng
+#         else:
+#             price_str = re.sub(r"[^\d]", "", price_str)
+#             if(len(price_str) < 7):
+#                 return None
+#             price_value = int(price_str)
+
+#         return price_value  # Trả về giá trị duy nhất
+
+#     return None  # Nếu không tìm thấy giá trị nào
+
 
 def extract_price(text):
     """
-    Sử dụng regex để tìm giá tiền trong văn bản.
+    Nhận diện giá tiền từ văn bản và trả về một giá trị duy nhất.
     """
-    match = re.search(price_pattern, text.lower())
-    if match:
+    prices = []
+
+    # Sử dụng regex để tìm tất cả các số có thể là giá
+    matches = re.finditer(price_pattern, text.lower())
+
+    # Nếu có ít nhất một kết quả khớp, lấy kết quả đầu tiên
+    for match in matches:
         price_str = match.group(0)
-        # Xử lý giá trị có triệu hoặc không
-        if "triệu" in price_str or "tr" in price_str:
-            price_str = re.sub(r"[^\d,]", "", price_str)  # Loại bỏ chữ
-            price_str = price_str.replace(",", ".")  # Chuyển ',' thành '.'
-            return float(price_str) * 1_000_000  # Chuyển triệu sang đồng
-        else:  # Trường hợp giá trị trực tiếp có dạng hàng nghìn hoặc triệu
-            price_str = re.sub(r"[^\d]", "", price_str)  # Loại bỏ ký tự không phải số
-            return int(price_str)
-    return None
+        # Xử lý giá trị nếu chứa đơn vị tiền tệ
+        if any(unit in price_str for unit in ["triệu", "tr", "vnđ", "vnd", "đồng", "đ", "m", "millions"]):
+            price_str = re.sub(r"[^\d,]", "", price_str)
+            price_value = float(price_str.replace(",", ".")) * 1_000_000  # Quy đổi sang đồng
+            prices.append(price_value)
+        else:
+            price_str = re.sub(r"[^\d]", "", price_str)
+            if(len(price_str) >= 7):
+                price_value = int(price_str)
+                prices.append(price_value)
+
+    return prices  # Nếu không tìm thấy giá trị nào
+
 
 
 def extract_price_brand(text):
-    """
-    Kết hợp nhận diện thương hiệu và giá từ văn bản.
-    """
     text = normalize_text(text)
     doc = nlp(text)
     specs = {}
 
-    # Nhận diện thương hiệu
-    brand = extract_brand(text, doc)
-    if brand:
-        specs["brand"] = brand
+    # Nhận diện tất cả thương hiệu
+    brands = extract_brand(text, doc)
+    if brands:
+        specs["brands"] = brands
 
-    # Nhận diện giá
-    price = extract_price(text)
-    if price:
-        specs["price"] = price
+    # Nhận diện tất cả giá
+    prices = extract_price(text)
+    if prices:
+        specs["prices"] = prices
 
     return specs
 
-# Example usage
-texts = [
-    "tôi muốn mua máy dell khoảng 12 triệu"
-]
 
-for text in texts:
-    print(f"Text: {text}\nExtracted: {extract_price_brand(text)}\n")
+# Example usage
+# while(1):
+#     text = input("")
+#     print(extract_price_brand(text))
+
+
+
 

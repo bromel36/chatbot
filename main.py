@@ -20,6 +20,8 @@ from flask import jsonify
 url_pattern = re.compile(r'http\S+')
 emoji_pattern = re.compile('|'.join(UNICODE_EMOJI), flags=re.UNICODE)
 
+
+
 type = 'demand'
 type_spec = 'specification'
 model = load_model(os.path.abspath('model/' + type + '/model.keras'))
@@ -35,6 +37,10 @@ words_spec = pickle.load(open(os.path.abspath('model/' + type_spec + '/texts.pkl
 classes_spec = pickle.load(open(os.path.abspath('model/' + type_spec + '/labels.pkl'), 'rb'))
 
 
+
+with open(os.path.abspath('vietnamese-stopwords.txt'), 'r', encoding='utf-8') as file:
+    stop_words = set(word.strip() for word in file.readlines())
+
 def clean_up_sentence(sentence):
     # ignore special characters
     sentence_trans = sentence.translate(str.maketrans('', '', string.punctuation))
@@ -42,11 +48,16 @@ def clean_up_sentence(sentence):
     sentence_trans = url_pattern.sub(r'', sentence_trans)
     # ignore emotions
     sentence_trans = emoji_pattern.sub(r'', sentence_trans)
+
+
     # tokenize the pattern - split words into array
     sentence_words = nltk.word_tokenize(sentence_trans)
 
+    sentence_words = [word for word in sentence_words if word.lower() not in stop_words]
+
+
     # stem each word - create short form for word
-    sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
+    # sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
     print(sentence_words)
 
     return sentence_words
@@ -99,10 +110,10 @@ def getResponse(ints, intents_json):
 
 def create_result(message, tag, brand, price):
     response_json = {
-        "message": message,
-        "tag": tag,
-        "brand": brand,
-        "price": price
+        "message": '' if not message else message,
+        "tag": '' if not tag else tag,
+        "brand": [] if not brand else brand,
+        "price": [] if not price else price,
     }
     return response_json
 
@@ -113,9 +124,9 @@ def chatbot_response(msg):
     ints_spec = predict_class(msg, modelSpec, words_spec, classes_spec)
 
     message = ""
-    tag = ""
-    brand = ""
-    price = ""
+    tag = None
+    brand = None
+    price = None
 
     if ints:
         tag = ints[0]['intent']
@@ -128,8 +139,10 @@ def chatbot_response(msg):
         message = getResponse(ints_spec, intents_spec)
         if spec_tag == 'find_laptop':
             specs = extract_price_brand(msg)  # Lấy dictionary trả về từ hàm
-            brand = specs.get("brand", "")
-            price = specs.get("price", "")
+            brand = specs.get("brands", "")
+            print(brand)
+            price = specs.get("prices", "")
+            print(price)
     else:
         message = "Tôi không hiểu câu hỏi của bạn."
 

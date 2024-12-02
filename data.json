@@ -1,0 +1,524 @@
+{
+  "data": [
+    {
+      "text": "Tôi muốn mua laptop Dell khoảng 20 triệu.",
+      "entities": [
+        {
+          "start": 20,
+          "end": 24,
+          "label": "BRAND"
+        },
+        {
+          "start": 32,
+          "end": 40,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Laptop Asus giá 15 triệu có tốt không?",
+      "entities": [
+        {
+          "start": 7,
+          "end": 11,
+          "label": "BRAND"
+        },
+        {
+          "start": 16,
+          "end": 24,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Máy tính xách tay HP giá chỉ 12 triệu.",
+      "entities": [
+        {
+          "start": 18,
+          "end": 20,
+          "label": "BRAND"
+        },
+        {
+          "start": 29,
+          "end": 37,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "MacBook của Apple có giá 30 triệu.",
+      "entities": [
+        {
+          "start": 12,
+          "end": 17,
+          "label": "BRAND"
+        },
+        {
+          "start": 25,
+          "end": 33,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Bạn có máy Lenovo giá 18 triệu không?",
+      "entities": [
+        {
+          "start": 11,
+          "end": 17,
+          "label": "BRAND"
+        },
+        {
+          "start": 22,
+          "end": 30,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Mình thích laptop Acer khoảng 16 triệu.",
+      "entities": [
+        {
+          "start": 18,
+          "end": 22,
+          "label": "BRAND"
+        },
+        {
+          "start": 30,
+          "end": 48,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Laptop MSI tầm giá 24 triệu có phù hợp không?",
+      "entities": [
+        {
+          "start": 7,
+          "end": 10,
+          "label": "BRAND"
+        },
+        {
+          "start": 19,
+          "end": 27,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Tôi muốn một máy Dell tầm 25 triệu đồng.",
+      "entities": [
+        {
+          "start": 17,
+          "end": 21,
+          "label": "BRAND"
+        },
+        {
+          "start": 26,
+          "end": 39,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Máy ROG giá 35.000.000 VNĐ thì sao?",
+      "entities": [
+        {
+          "start": 4,
+          "end": 7,
+          "label": "BRAND"
+        },
+        {
+          "start": 12,
+          "end": 28,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Surface Pro giá khoảng 22.5 triệu.",
+      "entities": [
+        {
+          "start": 0,
+          "end": 12,
+          "label": "BRAND"
+        },
+        {
+          "start": 23,
+          "end": 32,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Laptop giá 40 triệu có giảm giá không?",
+      "entities": [
+        {
+          "start": 11,
+          "end": 19,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Tôi muốn một chiếc MacBook giá 29 triệu đồng.",
+      "entities": [
+        {
+          "start": 20,
+          "end": 27,
+          "label": "BRAND"
+        },
+        {
+          "start": 31,
+          "end": 44,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "HP Pavilion có giá chỉ 11 triệu thôi.",
+      "entities": [
+        {
+          "start": 0,
+          "end": 11,
+          "label": "BRAND"
+        },
+        {
+          "start": 23,
+          "end": 31,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Lenovo ThinkPad giá 50 triệu thì sao?",
+      "entities": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "BRAND"
+        },
+        {
+          "start": 20,
+          "end": 28,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Dell XPS khoảng 70.000.000 VNĐ.",
+      "entities": [
+        {
+          "start": 0,
+          "end": 8,
+          "label": "BRAND"
+        },
+        {
+          "start": 16,
+          "end": 30,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Tôi muốn mua laptop giá 12 triệu.",
+      "entities": [
+        {
+          "start": 24,
+          "end": 32,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Bạn có laptop giá khoảng 15 triệu không?",
+      "entities": [
+        {
+          "start": 25,
+          "end": 33,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Tôi muốn mua máy Lenovo giá 18 triệu.",
+      "entities": [
+        {
+          "start": 17,
+          "end": 23,
+          "label": "BRAND"
+        },
+        {
+          "start": 28,
+          "end": 36,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Máy tính Asus giá 25 triệu có phù hợp không?",
+      "entities": [
+        {
+          "start": 9,
+          "end": 13,
+          "label": "BRAND"
+        },
+        {
+          "start": 18,
+          "end": 26,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "MacBook Pro của Apple có giá 30 triệu đồng.",
+      "entities": [
+        {
+          "start": 0,
+          "end": 12,
+          "label": "BRAND"
+        },
+        {
+          "start": 16,
+          "end": 21,
+          "label": "BRAND"
+        },
+        {
+          "start": 29,
+          "end": 42,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Laptop giá 45.000.000 VNĐ có đang giảm giá không?",
+      "entities": [
+        {
+          "start": 11,
+          "end": 25,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "HP Spectre giá chỉ 50 triệu, liệu có tốt?",
+      "entities": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "BRAND"
+        },
+        {
+          "start": 19,
+          "end": 27,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Mình cần laptop gaming giá 22 triệu.",
+      "entities": [
+        {
+          "start": 27,
+          "end": 35,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Laptop Alienware giá 60 triệu thì có đáng không?",
+      "entities": [
+        {
+          "start": 7,
+          "end": 17,
+          "label": "BRAND"
+        },
+        {
+          "start": 21,
+          "end": 29,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Bạn có máy tính Acer giá 15 triệu không?",
+      "entities": [
+        {
+          "start": 16,
+          "end": 20,
+          "label": "BRAND"
+        },
+        {
+          "start": 25,
+          "end": 33,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Mình thích laptop Gigabyte khoảng 35 triệu.",
+      "entities": [
+        {
+          "start": 18,
+          "end": 26,
+          "label": "BRAND"
+        },
+        {
+          "start": 34,
+          "end": 42,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Laptop Samsung giá 10 triệu phù hợp để học tập không?",
+      "entities": [
+        {
+          "start": 7,
+          "end": 15,
+          "label": "BRAND"
+        },
+        {
+          "start": 19,
+          "end": 27,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Máy MSI tầm 40 triệu rất tốt cho đồ họa.",
+      "entities": [
+        {
+          "start": 4,
+          "end": 7,
+          "label": "BRAND"
+        },
+        {
+          "start": 12,
+          "end": 20,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Dell Inspiron giá khoảng 20 triệu có đáng không?",
+      "entities": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "BRAND"
+        },
+        {
+          "start": 25,
+          "end": 33,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Máy Razer Blade tầm 70 triệu để chơi game có tốt không?",
+      "entities": [
+        {
+          "start": 4,
+          "end": 16,
+          "label": "BRAND"
+        },
+        {
+          "start": 20,
+          "end": 28,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Bạn có laptop Lenovo tầm giá 13 tr?",
+      "entities": [
+        {
+          "start": 14,
+          "end": 20,
+          "label": "BRAND"
+        },
+        {
+          "start": 29,
+          "end": 34,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Máy tính xách tay giá 25.000.000 đồng rất hấp dẫn.",
+      "entities": [
+        {
+          "start": 22,
+          "end": 37,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Bạn có laptop Apple giá dưới 40 triệu không?",
+      "entities": [
+        {
+          "start": 14,
+          "end": 19,
+          "label": "BRAND"
+        },
+        {
+          "start": 29,
+          "end": 37,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Tôi cần laptop giá chỉ 30tr hoặc thấp hơn.",
+      "entities": [
+        {
+          "start": 23,
+          "end": 27,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Máy tính giá 15tr liệu có đủ dùng cho văn phòng?",
+      "entities": [
+        {
+          "start": 13,
+          "end": 17,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Tôi cần laptop HP giá chỉ 15tr hoặc thấp hơn.",
+      "entities": [
+        {
+          "start": 15,
+          "end": 17,
+          "label": "BRAND"
+        },
+        {
+          "start": 26,
+          "end": 30,
+          "label": "PRICE"
+        }
+      ]
+    },
+    {
+      "text": "Bán cho tôi laptop Asus giá 20tr.",
+      "entities": [
+        {
+          "start": 19,
+          "end": 23,
+          "label": "BRAND"
+        },
+        {
+          "start": 28,
+          "end": 32,
+          "label": "PRICE"
+        }
+      ]
+    }
+  ]
+}
