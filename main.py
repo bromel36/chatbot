@@ -136,7 +136,7 @@ def chatbot_response(msg):
         spec_tag = ints_spec[0]['intent']
         message = getResponse(ints_spec, intents_spec)
         if spec_tag == 'find_laptop':
-            specs = extract_price_brand(msg)  # Lấy dictionary trả về từ hàm
+            specs = process_input(msg)  # Lấy dictionary trả về từ hàm
             brand = specs.get("brands", "")
             print(brand)
             price = specs.get("prices", "")
