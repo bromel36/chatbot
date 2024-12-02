@@ -67,35 +67,6 @@ def extract_brand(text, doc):
     return brands
 
 
-# def extract_price(text):
-#     """
-#     Nhận diện giá tiền từ văn bản và trả về một giá trị duy nhất.
-#     """
-
-#     price_pattern = r"\b\d{1,3}([.,]\d{3})*(\s*(triệu|tr|vnđ|vnd|đồng|đ|m|millions)?)\b|\b\d+\s*(triệu|tr|vnđ|vnd|đồng|đ|m|million)\b"
-
-
-#     # Sử dụng regex để tìm tất cả các số có thể là giá
-#     matches = re.finditer(price_pattern, text.lower())
-
-#     # Nếu có ít nhất một kết quả khớp, lấy kết quả đầu tiên
-#     for match in matches:
-#         price_str = match.group(0)
-#         # Xử lý giá trị nếu chứa đơn vị tiền tệ
-#         if any(unit in price_str for unit in ["triệu", "tr", "vnđ", "vnd", "đồng", "đ", "m", "millions"]):
-#             price_str = re.sub(r"[^\d,]", "", price_str)
-#             price_value = float(price_str.replace(",", ".")) * 1_000_000  # Quy đổi sang đồng
-#         else:
-#             price_str = re.sub(r"[^\d]", "", price_str)
-#             if(len(price_str) < 7):
-#                 return None
-#             price_value = int(price_str)
-
-#         return price_value  # Trả về giá trị duy nhất
-
-#     return None  # Nếu không tìm thấy giá trị nào
-
-
 def extract_price(text):
     """
     Nhận diện giá tiền từ văn bản và trả về một giá trị duy nhất.

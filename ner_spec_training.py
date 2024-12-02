@@ -27,14 +27,15 @@ for item in training_data:
     entities = [(ent["start"], ent["end"], ent["label"]) for ent in item["entities"]]
     examples.append(Example.from_dict(doc, {"entities": entities}))
 
+
+
 # Huấn luyện mô hình với Early Stopping và lưu mô hình tốt nhất
-
-
 optimizer = nlp.begin_training()
 best_loss = float("inf")  # Khởi tạo loss tốt nhất
 no_improve_epochs = 0     # Số epoch không cải thiện liên tiếp
 patience = 4              # Ngưỡng kiên nhẫn
 best_model_path = "brand_price_ner_model"
+
 
 for epoch in range(20):  # Train trong tối đa 20 epoch
     losses = {}
@@ -45,20 +46,17 @@ for epoch in range(20):  # Train trong tối đa 20 epoch
     print(f"Epoch {epoch} - Loss: {current_loss}")
 
     # Lưu mô hình nếu loss giảm
-    # if current_loss < best_loss:
-    #     best_loss = current_loss
-    #     no_improve_epochs = 0
-    #     nlp.to_disk(best_model_path)
-    #     print(f"New best model saved with loss {best_loss}")
-    # else:
-    #     no_improve_epochs += 1
-    #
-    # # Kiểm tra điều kiện dừng sớm
-    # if no_improve_epochs >= patience:
-    #     print("Early stopping triggered.")
-    #     break
-    if current_loss < 1.0:
+    if current_loss < best_loss:
+        best_loss = current_loss
+        no_improve_epochs = 0
         nlp.to_disk(best_model_path)
-        print(f"New best model saved with loss {current_loss}")
+        print(f"New best model saved with loss {best_loss}")
+    else:
+        no_improve_epochs += 1
+
+    # Kiểm tra điều kiện dừng sớm
+    if no_improve_epochs >= patience:
+        print("Early stopping triggered.")
+        break
 
 print(f"Training completed. Best model saved to '{best_model_path}' with loss {best_loss}")
